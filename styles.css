@@ -206,76 +206,93 @@ nav {
 
 /* Mobile Menu Styles */
 @media (max-width: 768px) {
-    .container {
+    nav {
         position: relative;
+        z-index: 1000;
     }
 
     .mobile-menu-btn {
         display: block;
         position: relative;
-        width: 30px;
-        height: 30px;
+        width: 44px; /* Larger touch target */
+        height: 44px; /* Larger touch target */
         background: none;
         border: none;
-        padding: 0;
+        padding: 10px;
         margin-left: auto;
         cursor: pointer;
+        z-index: 1001;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
     }
 
     .mobile-menu-btn span {
         display: block;
         position: absolute;
         height: 2px;
-        width: 100%;
+        width: 24px;
         background: var(--text-color);
-        opacity: 1;
-        left: 0;
-        transform: rotate(0deg);
-        transition: .25s ease-in-out;
+        left: 10px;
+        transition: .2s ease-in-out;
     }
 
-    .mobile-menu-btn span:nth-child(1) { top: 6px; }
-    .mobile-menu-btn span:nth-child(2) { top: 14px; }
-    .mobile-menu-btn span:nth-child(3) { top: 22px; }
+    .mobile-menu-btn span:nth-child(1) { top: 14px; }
+    .mobile-menu-btn span:nth-child(2) { top: 21px; }
+    .mobile-menu-btn span:nth-child(3) { top: 28px; }
 
     nav.menu-open .mobile-menu-btn span:nth-child(1) {
-        top: 14px;
-        transform: rotate(135deg);
+        top: 21px;
+        transform: rotate(45deg);
     }
 
     nav.menu-open .mobile-menu-btn span:nth-child(2) {
         opacity: 0;
-        left: -60px;
     }
 
     nav.menu-open .mobile-menu-btn span:nth-child(3) {
-        top: 14px;
-        transform: rotate(-135deg);
+        top: 21px;
+        transform: rotate(-45deg);
     }
 
     .nav-links {
         display: none;
-        position: absolute;
-        top: 100%;
+        position: fixed;
+        top: 0;
         left: 0;
         right: 0;
-        background: var(--background);
-        padding: 1rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        bottom: 0;
+        background: rgba(10, 15, 29, 0.98);
+        padding-top: 80px;
         flex-direction: column;
         align-items: center;
-        gap: 1rem;
+        gap: 2rem;
+        opacity: 0;
+        transition: opacity 0.2s ease-in-out;
+        -webkit-overflow-scrolling: touch;
     }
 
-    nav.menu-open .nav-links {
+    .nav-links.active {
         display: flex;
+        opacity: 1;
     }
 
     .nav-links a {
-        font-size: 1.2rem;
-        padding: 0.8rem;
-        width: 100%;
+        font-size: 1.5rem;
+        padding: 1rem 2rem;
+        width: auto;
+        min-width: 200px;
         text-align: center;
+        color: white;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Prevent body scroll when menu is open */
+    body.menu-open {
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+        height: 100%;
     }
 
     .auth-buttons {
