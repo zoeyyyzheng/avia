@@ -1,59 +1,37 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const navLinks = document.querySelector('.nav-links');
+    const menuBtn = document.querySelector('.mobile-menu-btn');
     const nav = document.querySelector('nav');
+    let isMenuOpen = false;
 
-    // Prevent any default touch behaviors that might interfere
-    nav.addEventListener('touchmove', function(e) {
-        e.preventDefault();
-    }, { passive: false });
-
-    // Toggle menu on button click/touch
-    function toggleMenu(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        document.body.classList.toggle('menu-open');
-        navLinks.classList.toggle('active');
-        mobileMenuBtn.classList.toggle('active');
-        nav.classList.toggle('menu-open');
+    function toggleMenu() {
+        isMenuOpen = !isMenuOpen;
+        nav.classList.toggle('menu-open', isMenuOpen);
+        document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+        menuBtn.setAttribute('aria-expanded', isMenuOpen);
     }
 
-    // Add both click and touch events for better iOS support
-    mobileMenuBtn.addEventListener('click', toggleMenu);
-    mobileMenuBtn.addEventListener('touchend', toggleMenu);
+    // Handle menu button clicks
+    menuBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        toggleMenu();
+    });
 
-    // Close menu when clicking/touching a link
-    navLinks.addEventListener('click', function(e) {
+    // Handle menu links
+    document.querySelector('.nav-links').addEventListener('click', function(e) {
         if (e.target.tagName === 'A') {
-            e.preventDefault();
-            const href = e.target.getAttribute('href');
-            document.body.classList.remove('menu-open');
-            navLinks.classList.remove('active');
-            mobileMenuBtn.classList.remove('active');
-            nav.classList.remove('menu-open');
-            // Navigate after menu closes
-            setTimeout(() => {
-                window.location.href = href;
-            }, 300);
+            toggleMenu();
         }
     });
 
-    // Close menu when clicking/touching outside
-    document.addEventListener('click', function(e) {
-        if (document.body.classList.contains('menu-open') && !e.target.closest('nav')) {
-            document.body.classList.remove('menu-open');
-            navLinks.classList.remove('active');
-            mobileMenuBtn.classList.remove('active');
-            nav.classList.remove('menu-open');
-        }
-    });
+    // Set initial ARIA states
+    menuBtn.setAttribute('aria-expanded', 'false');
 
-    // Add active class to current page in navigation
+    // Set active nav item
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    const navLinkElements = document.querySelectorAll('.nav-links a');
-    navLinkElements.forEach(link => {
+    document.querySelectorAll('.nav-links a').forEach(link => {
         if (link.getAttribute('href') === currentPage) {
             link.classList.add('active');
+            link.setAttribute('aria-current', 'page');
         }
     });
 });
