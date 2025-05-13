@@ -9,14 +9,25 @@ document.addEventListener('DOMContentLoaded', function() {
     function toggleMenu(event) {
         if (event) {
             event.preventDefault();
+            event.stopPropagation();
         }
 
         if (isAnimating) return;
         isAnimating = true;
 
+        // Toggle menu state
         const isOpening = !nav.classList.contains('menu-open');
+        console.log('Menu toggle clicked - opening:', isOpening);
+        console.log('Current nav classes:', nav.classList.toString());
+        console.log('Current navLinks classes:', navLinks.classList.toString());
+
         nav.classList.toggle('menu-open');
         navLinks.classList.toggle('active');
+        document.body.classList.toggle('menu-open');
+
+        console.log('After toggle - nav classes:', nav.classList.toString());
+        console.log('After toggle - navLinks classes:', navLinks.classList.toString());
+
         document.body.style.overflow = isOpening ? 'hidden' : '';
 
         // Reset animation state after transition
