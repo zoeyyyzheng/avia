@@ -18,9 +18,13 @@ document.addEventListener('DOMContentLoaded', function() {
         // Simple toggle of active class
         navLinks.classList.toggle('active');
         
+        // Also toggle menu-open class on nav for hamburger animation
+        nav.classList.toggle('menu-open');
+        
         // Prevent body scroll when menu is open
         const isMenuOpen = navLinks.classList.contains('active');
         document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+        document.body.classList.toggle('menu-open', isMenuOpen);
 
         console.log('After toggle - nav-links visibility:', navLinks.style.display);
         console.log('Menu is now:', isMenuOpen ? 'open' : 'closed'); // Match the CSS transition duration

@@ -187,6 +187,7 @@ nav {
     color: var(--accent);
 }
 
+/* Mobile Menu Button Styles */
 .mobile-menu-btn {
     display: none;
     background: none;
@@ -202,6 +203,19 @@ nav {
     background: var(--text-color);
     margin: 5px 0;
     transition: all 0.3s ease;
+}
+
+/* Hamburger Animation */
+nav.menu-open .mobile-menu-btn span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+nav.menu-open .mobile-menu-btn span:nth-child(2) {
+    opacity: 0;
+}
+
+nav.menu-open .mobile-menu-btn span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
 }
 
 /* Mobile Menu Styles */
@@ -276,7 +290,7 @@ nav {
         left: 0;
         width: 100%;
         height: 100vh;
-        background-color: white;
+        background-color: var(--background); /* Using the background variable instead of white */
         padding: 80px 20px 40px;
         flex-direction: column;
         align-items: center;
@@ -966,32 +980,34 @@ footer {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .container {
+        padding: 0 20px;
+    }
+    
     .hero h1 {
-        font-size: 3.5rem;
+        font-size: 3rem;
+        letter-spacing: -1px;
     }
     
     .hero .subtitle {
-        font-size: 1.25rem;
+        font-size: 1.1rem;
     }
     
     .cta-group {
         flex-direction: column;
         align-items: stretch;
+        gap: 2rem;
     }
     
     .stats {
         border-left: none;
         padding-left: 0;
-        justify-content: center;
+        justify-content: space-around;
     }
     
     .signup-form {
         flex-direction: column;
         padding: 0 20px;
-    }
-    
-    .nav-links {
-        display: none;
     }
     
     .tech-specs {
@@ -1000,7 +1016,27 @@ footer {
     }
     
     section h2 {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+    }
+    
+    .feature-grid, .overview-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .feature-card, .overview-item {
+        padding: 1.5rem;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .cta-button {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
     }
 }
 
