@@ -12,28 +12,18 @@ document.addEventListener('DOMContentLoaded', function() {
             event.stopPropagation();
         }
 
-        if (isAnimating) return;
-        isAnimating = true;
+        console.log('Menu toggle clicked');
+        console.log('Before toggle - nav-links visibility:', navLinks.style.display);
 
-        // Toggle menu state
-        const isOpening = !nav.classList.contains('menu-open');
-        console.log('Menu toggle clicked - opening:', isOpening);
-        console.log('Current nav classes:', nav.classList.toString());
-        console.log('Current navLinks classes:', navLinks.classList.toString());
-
-        nav.classList.toggle('menu-open');
+        // Simple toggle of active class
         navLinks.classList.toggle('active');
-        document.body.classList.toggle('menu-open');
+        
+        // Prevent body scroll when menu is open
+        const isMenuOpen = navLinks.classList.contains('active');
+        document.body.style.overflow = isMenuOpen ? 'hidden' : '';
 
-        console.log('After toggle - nav classes:', nav.classList.toString());
-        console.log('After toggle - navLinks classes:', navLinks.classList.toString());
-
-        document.body.style.overflow = isOpening ? 'hidden' : '';
-
-        // Reset animation state after transition
-        setTimeout(() => {
-            isAnimating = false;
-        }, 300); // Match the CSS transition duration
+        console.log('After toggle - nav-links visibility:', navLinks.style.display);
+        console.log('Menu is now:', isMenuOpen ? 'open' : 'closed'); // Match the CSS transition duration
     }
 
     // Handle menu button interactions
